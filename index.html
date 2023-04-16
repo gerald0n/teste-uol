@@ -20,9 +20,54 @@
             nomodule
             src="https://unpkg.com/ionicons@7.1.0/dist/ionicons/ionicons.js"
         ></script>
+        <link rel="stylesheet" href="./assets/styles/main.css">
         <title>UOL - Bate papo</title>
     </head>
     <body>
+        <div class="login-render">
+            <div class="main">
+                <img src="./assets/images/logo 2.png" alt="" />
+                <div class="container-login">
+                    <div class="error-login disabled">
+                        <ion-icon name="close-circle"></ion-icon>
+                        <p>username já existente. Tente novamente!</p>
+                    </div>
+                    <input
+                        data-test="input-name"
+                        type="text"
+                        id="login"
+                        placeholder="Digite seu nome"
+                        autocomplete="off"
+                    />
+                    <button data-test="send-name" id="btnLogin" disabled>
+                        Entrar
+                    </button>
+                </div>
+            </div>
+        </div>
+
+        <div class="chat-render off">
+            <header>
+                <img id="logo" src="./assets/images/logo 1.png" alt="" />
+                <button data-test="open-participants" id="header-icon"><ion-icon name="people"></ion-icon></button>
+            </header>
+            <main>
+                <ul class="container-messages"></ul>
+                <span id="scrollar"></span>
+            </main>
+            <div class="send-message">
+                <div>
+                    <input data-test="input-message"
+                        id="inputMessage"
+                        type="text"
+                        placeholder="Escreva aqui..."
+                    />
+                    <span data-test="recipient" id="sendTo">Enviando para Todos (publico)</span>
+                </div>
+                <button data-test="send-message" id="btnSendMessage"><ion-icon name="paper-plane-outline"></ion-icon></button>
+            </div>
+        </div>
+
         <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
         <script src="./assets/scripts/main.js"></script>
     </body>

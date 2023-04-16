@@ -1,8 +1,113 @@
-body {
-    background: #f3f3f3;
-    font-family: 'Roboto';
-    font-weight: 400;
+
+.login-render.off, .chat-render.off {
+    display: none;
+    visibility: hidden;
 }
+
+.main {
+    width: 26rem;
+    height: 30rem;
+    margin: 0 auto;
+    margin-top: 15rem;
+
+    display: flex;
+    flex-direction: column;
+
+    align-items: center;
+    justify-content: space-between;
+}
+
+#login {
+    height: 54px;
+    text-align: center;
+
+    background: #ffffff;
+    border: 1px solid #d7d7d7;
+    border-radius: 4px;
+    margin-bottom: 1.5rem;
+}
+
+#login::placeholder,
+#btnLogin,
+#login {
+    font-size: 18px;
+    line-height: 25px;
+    text-align: center;
+}
+
+#login::placeholder {
+    color: #aeaeae;
+}
+
+#btnLogin {
+    width: 109px;
+    height: 45px;
+    border: none;
+    background: #e7e7e7;
+    border-radius: 9px;
+    background-color: rgb(0, 0, 0);
+    color: white;
+}
+
+#btnLogin:disabled {
+    background-color: #aba6a6;
+    color: white;
+}
+
+#login:focus {
+    outline-color: rgb(0, 0, 0);
+}
+
+#login:focus.error {
+    outline-color: rgb(255, 0, 0);
+}
+
+.container-login {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.error-login {
+    display: flex;
+    align-items: center;
+    width: 100%;
+    margin-bottom: 0.5rem;
+    gap: 0.5rem;
+    color: red;
+    font-weight: 500;
+}
+
+.error-login ion-icon {
+    font-size: 12px;
+}
+
+.error-login.disabled {
+    visibility: hidden;
+}
+
+.loading {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: rgb(255, 255, 255, 0.5);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.loading img {
+    width: 5rem;
+    height: 5rem;
+}
+
+.loading.disabled {
+    display: none;
+}
+
+/*  */
 
 ion-icon {
     width: 3.5rem;
@@ -104,122 +209,5 @@ button {
 }
 
 .container-messages .bg-pink {
-    background: #ffdede;
-}
-
-.navigation {
-    font-size: 1.6rem;
-    padding-inline: 2rem;
-}
-
-.loggedUsers li,
-.visibility li {
-    display: flex;
-    justify-content: space-between;
-    cursor: pointer;
-}
-
-.loggedUsers li span,
-.visibility li span {
-    display: flex;
-    align-items: center;
-    gap: 0.7rem;
-}
-
-.loggedUsers ion-icon:nth-child(2),
-.visibility ion-icon:nth-child(2) {
-    width: 1.9rem;
-    height: 1.7rem;
-    color: #28bb25;
-    visibility: hidden;
-}
-
-.loggedUsers .check.checked,
-.visibility .check.checked {
-    visibility: visible;
-}
-
-.loggedUsers ul,
-.visibility ul {
-    display: flex;
-    flex-direction: column;
-    gap: 1.2rem;
-}
-
-.sidebar p {
-    font-weight: 700;
-    line-height: 1.9rem;
-    margin-block: 3rem;
-    text-align: center;
-}
-
-.loggedUsers ion-icon {
-    width: 2.5rem;
-    height: 2.5rem;
-}
-
-.visibility ion-icon {
-    width: 2.2rem;
-    height: 2.2rem;
-}
-
-.sidebar {
-    width: 100%;
-    height: 100%;
-    position: fixed;
-    top: 0;
-    left: 0;
-    z-index: 10;
-}
-
-.sidebar.disabled {
-    display: none;
-}
-
-.return {
-    width: 30%;
-    height: 100%;
-    background: rgba(0, 0, 0, 0.6);
-    position: fixed;
-    top: 0;
-    left: 0;
-}
-
-.navigation {
-    width: 70%;
-    height: 100%;
-    background: white;
-    position: fixed;
-    top: 0;
-    right: 0;
-}
-.sidebar {
-    width: 100%;
-    height: 100%;
-    position: fixed;
-    top: 0;
-    left: 0;
-    z-index: 10;
-}
-
-.sidebar.disabled {
-    display: none;
-}
-
-.return {
-    width: 30%;
-    height: 100%;
-    background: rgba(0, 0, 0, 0.6);
-    position: fixed;
-    top: 0;
-    left: 0;
-}
-
-.navigation {
-    width: 70%;
-    height: 100%;
-    background: white;
-    position: fixed;
-    top: 0;
-    right: 0;
+    background: #FFDEDE;
 }
