@@ -8,7 +8,13 @@ const btnLogin = document.querySelector('#btnLogin')
 const loginRender = document.querySelector('.login-render')
 const chatRender = document.querySelector('.chat-render')
 const containerMain = document.querySelector('.container-messages')
+const containerParticipants = document.querySelector('.loggedUsers ul')
+const selectVisibility = document.querySelectorAll('.visibility ul li')
+const btnSend = document.querySelector('#btnSendMessage')
+const inputMessage = document.querySelector('#inputMessage')
+document.querySelector('#scrollar').scrollIntoView()
 let arrMessages = []
+let arrParticipants = []
 const user = {
     from: '',
     to: 'Todos',
@@ -29,6 +35,13 @@ if (inputLogin)
         }
     })
 
+if (inputMessage)
+    inputMessage.addEventListener('focus', () => {
+        onkeyup = event => {
+            if (event.key === 'Enter') setMessage()
+        }
+    })
+
 if (btnLogin) btnLogin.addEventListener('click', loginRoom)
 
 // ENTRAR NA SALA
@@ -38,18 +51,22 @@ function loginRoom() {
         .post(URL_LOGIN, { name: user.from })
         .then(response => {
             console.log(response.data)
+            if (response.status === 200) {
+                chatRender.classList.remove('off')
+                if (btnSend) btnSend.addEventListener('click', setMessage)
+                listParticipants()
+                getMessages()
+                setInterval(getMessages, 3000, URL_MESSAGES)
+                setInterval(authentication, 3000, URL_STATUS, user)
+                loginRender.classList.add('off')
+            } else return
             // inputLogin.value = ''
-            chatRender.classList.remove('off')
-            getMessages()
-            setInterval(getMessages, 3000, URL_MESSAGES)
-            setInterval(authentication, 3000, URL_STATUS, user)
-            loginRender.classList.add('off')
-
             // document.querySelector('.loading').classList.remove('disabled')
         })
         .catch(error => {
-            console.log(error)
-            // document.querySelector('.error-login').classList.remove('disabled')
+            alert(`Erro ${error.code}: username já utilizado. Tente novamente.`)
+            document.querySelector('.error-login').classList.remove('disabled')
+            inputLogin.value = ''
         })
 }
 
@@ -62,6 +79,7 @@ function getMessages() {
             showMessages()
         })
         .catch(error => console.log(error))
+    listParticipants()
 }
 
 function showMessages() {
@@ -92,7 +110,8 @@ function setMessage() {
 // BUSCAR PARTICIPANTES
 function getParticipants() {
     axios.get(URL_LOGIN).then(response => {
-        console.log(response.data)
+        arrParticipants = response.data
+        arrParticipants.unshift({ name: 'Todos' })
     })
 }
 
@@ -102,8 +121,100 @@ function authentication(url, user) {
         .post(url, { name: user.from })
         .then(response => console.log(response.data))
         .catch(error => {
-            console.log(
+            console(
                 `Erro ${error.response.data}: usuário desconectado por inatividade!`
             )
         })
 }
+
+// ---------------------------
+
+function listParticipants() {
+    getParticipants()
+    containerParticipants.innerHTML = ''
+    arrParticipants.forEach(participant => {
+        if (participant.name !== user.from) {
+            if (participant.name === 'Todos')
+                containerParticipants.innerHTML += `
+          <li data-test="all" class="user">
+              <span><ion-icon name="people"></ion-icon>${participant.name}</span
+              ><ion-icon data-test="check"
+                  class="check checked"
+                  name="checkmark-sharp"
+              ></ion-icon>
+          </li>`
+            else
+                containerParticipants.innerHTML += `
+      <li data-test="participant" class="user">
+          <span><ion-icon name="person-circle"></ion-icon
+          >${participant.name}</span
+          ><ion-icon data-test="check"
+              class="check"
+              name="checkmark-sharp"
+          ></ion-icon>
+      </li>`
+        }
+    })
+    const selectUser = document.querySelectorAll('.user')
+    if (selectUser) {
+        selectUser.forEach(User => {
+            if (User)
+                User.addEventListener('click', () => {
+                    let checked
+                    for (const currentUser of selectUser) {
+                        if (
+                            currentUser.childNodes[2].classList.contains(
+                                'checked'
+                            )
+                        )
+                            checked = currentUser
+                    }
+                    if (User !== checked) {
+                        checked.childNodes[2].classList.remove('checked')
+                        User.childNodes[2].classList.add('checked')
+                        user.to = User.childNodes[1].innerText
+                        sendTo.innerText = `Enviando para ${user.to} (${
+                            user.type === 'message'
+                                ? 'público'
+                                : 'reservadamente'
+                        })`
+                    }
+                })
+        })
+    }
+}
+
+selectVisibility.forEach(type => {
+    type.addEventListener('click', () => {
+        let checked
+        for (const currentType of selectVisibility) {
+            if (currentType.childNodes[2].classList.contains('checked'))
+                checked = currentType
+        }
+        if (type !== checked) {
+            checked.childNodes[2].classList.remove('checked')
+            type.childNodes[2].classList.add('checked')
+            if (type.childNodes[1].innerText === 'Público') {
+                sendTo.innerText = `Enviando para ${user.to} (público)`
+                user.type = 'message'
+            }
+            if (type.childNodes[1].innerText === 'Reservadamente') {
+                sendTo.innerText = `Enviando para ${user.to} (reservadamente)`
+                user.type = 'private_message'
+            }
+        }
+    })
+})
+
+const closeSidebar = document.querySelector('.return')
+const sidebar = document.querySelector('.sidebar')
+const openSidebar = document.querySelector('#header-icon')
+
+closeSidebar.addEventListener('click', () => {
+    sidebar.classList.add('disabled')
+})
+
+if (openSidebar)
+    openSidebar.addEventListener('click', () => {
+        sidebar.classList.remove('disabled')
+    })

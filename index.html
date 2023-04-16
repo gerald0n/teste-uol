@@ -47,6 +47,42 @@
         </div>
 
         <div class="chat-render off">
+
+            <div class="sidebar disabled">
+                <div data-test="overlay" class="return"></div>
+                <div class="navigation">
+                    <div class="loggedUsers">
+                        <p>Escolha um contato <br />para enviar mensagem:</p>
+                        <ul>
+                            <li></li>
+                        </ul>
+                    </div>
+                    <div class="visibility">
+                        <p>Escolha a visibilidade:</p>
+                        <ul>
+                            <li data-test="public" class="type-message">
+                                <span
+                                    ><ion-icon name="lock-open"></ion-icon
+                                    >Público</span
+                                ><ion-icon
+                                    class="check checked"
+                                    name="checkmark-sharp"
+                                ></ion-icon>
+                            </li>
+                            <li data-test="private" class="type-message">
+                                <span
+                                    ><ion-icon name="lock-closed"></ion-icon
+                                    >Reservadamente</span
+                                ><ion-icon
+                                    class="check"
+                                    name="checkmark-sharp"
+                                ></ion-icon>
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+            
             <header>
                 <img id="logo" src="./assets/images/logo 1.png" alt="" />
                 <button data-test="open-participants" id="header-icon"><ion-icon name="people"></ion-icon></button>
