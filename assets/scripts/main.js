@@ -121,6 +121,7 @@ function authentication(url, user) {
         .post(url, { name: user.from })
         .then(response => console.log(response.data))
         .catch(error => {
+          window.location.reload()
             console(
                 `Erro ${error.response.data}: usuário desconectado por inatividade!`
             )
