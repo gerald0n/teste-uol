@@ -50,18 +50,14 @@ function loginRoom() {
     axios
         .post(URL_LOGIN, { name: user.from })
         .then(response => {
-            console.log(response.data)
-            if (response.status === 200) {
-                chatRender.classList.remove('off')
-                if (btnSend) btnSend.addEventListener('click', setMessage)
-                listParticipants()
-                getMessages()
-                setInterval(getMessages, 3000, URL_MESSAGES)
-                setInterval(authentication, 3000, URL_STATUS, user)
-                loginRender.classList.add('off')
-            } else return
-            // inputLogin.value = ''
-            // document.querySelector('.loading').classList.remove('disabled')
+            if (btnSend) btnSend.addEventListener('click', setMessage)
+            getMessages()
+            listParticipants()
+            setInterval(listParticipants, 10000)
+            setInterval(getMessages, 3000, URL_MESSAGES)
+            setInterval(authentication, 3000, URL_STATUS, user)
+            chatRender.classList.remove('off')
+            loginRender.classList.add('off')
         })
         .catch(error => {
             alert(`Erro ${error.code}: username já utilizado. Tente novamente.`)
@@ -79,7 +75,6 @@ function getMessages() {
             showMessages()
         })
         .catch(error => console.log(error))
-    listParticipants()
 }
 
 function showMessages() {
@@ -121,7 +116,7 @@ function authentication(url, user) {
         .post(url, { name: user.from })
         .then(response => console.log(response.data))
         .catch(error => {
-          window.location.reload()
+            window.location.reload()
             console(
                 `Erro ${error.response.data}: usuário desconectado por inatividade!`
             )
