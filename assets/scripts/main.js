@@ -55,7 +55,7 @@ function loginRoom() {
             listParticipants()
             setInterval(listParticipants, 10000)
             setInterval(getMessages, 3000, URL_MESSAGES)
-            setInterval(authentication, 3000, URL_STATUS, user)
+            // setInterval(authentication, 3000, URL_STATUS, user)
             chatRender.classList.remove('off')
             loginRender.classList.add('off')
         })
@@ -93,13 +93,16 @@ function showMessages() {
 
 // ENVIAR MENSAGEM AO SERVIDOR
 function setMessage() {
-    user.text = inputMessage.value
-    axios
-        .post(URL_MESSAGES, user)
-        .then(response => console.log(user))
-        .catch(error => {
-            console.log('MENSAGEM VAZIA.')
-        })
+    if (inputMessage.value !== '') {
+        user.text = inputMessage.value
+        axios
+            .post(URL_MESSAGES, user)
+            .then(response => console.log(user))
+            .catch(error => {
+                alert('USUÁRIO DESLOGADO POR INATIVIDADE')
+                window.location.reload()
+            })
+    }
 }
 
 // BUSCAR PARTICIPANTES
