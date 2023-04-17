@@ -97,10 +97,14 @@ function setMessage() {
         user.text = inputMessage.value
         axios
             .post(URL_MESSAGES, user)
-            .then(response => console.log(user))
+            .then(response => {
+                showMessages()
+            })
             .catch(error => {
-                alert('USUÁRIO DESLOGADO POR INATIVIDADE')
                 window.location.reload()
+                console(
+                    `Erro ${error.response.data}: usuário desconectado por inatividade!`
+                )
             })
     }
 }
